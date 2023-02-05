@@ -1,0 +1,27 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:614e58d4bde9bc7f3b8f4562ce52ad14:b89b822664d83effaa3750a2502eb7a5:c94b5ab954089c0ddbdfc73dda9d9ef4$
+#
+:format=40300
+:texture=skeleton_walk.png
+:size=1024x1024
+:pivotpoints=enabled
+:borders=disabled
+:alphahandling=ClearTransparentPixels
+
+skeleton_walk_14;0;744;128;280; 0.421875;0.68928571; 0;0;0;0
+skeleton_walk_15;143;751;125;273; 0.432;0.69230769; 0;0;0;0
+skeleton_walk_16;286;746;136;278; 0.49264706;0.67985612; 0;0;0;0
+skeleton_walk_17;429;766;129;258; 0.51162791;0.6705426400000001; 0;0;0;0
+skeleton_walk_18;572;783;108;241; 0.4537037;0.65145228; 0;0;0;0
+skeleton_walk_19;715;777;104;247; 0.45192308;0.65991903; 0;0;0;0
+skeleton_walk_20;858;760;133;264; 0.4887218;0.68560606; 0;0;0;0
+skeleton_walk_21;0;458;141;274; 0.4822695;0.6897810200000001; 0;0;0;0
+skeleton_walk_22;143;457;143;275; 0.5034965;0.68727273; 0;0;0;0
+skeleton_walk_23;286;457;128;275; 0.5;0.69454545; 0;0;0;0
+skeleton_walk_24;429;467;120;265; 0.4;0.68679245; 0;0;0;0
+skeleton_walk_25;572;440;130;292; 0.41538462;0.69520548; 0;0;0;0
