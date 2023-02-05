@@ -19,9 +19,4 @@ public class OverheadText : MonoBehaviour
   {
     _textObject.transform.position = _targetObject.transform.position;
   }
-
-  public void OnPlayerAreaReached()
-  {
-
-  }
 }

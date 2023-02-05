@@ -20,13 +20,12 @@ public class Enemy : MonoBehaviour
   private void OnTriggerEnter2D(Collider2D collision)
   {
     if (collision.gameObject.name == "PlayerArea")
-      SceneController.GameOver = true;
+      GameController.State = GameController.GameState.GameOver;
   }
 
   private void Update()
   {
-    if (SceneController.GameOver)
-      return;
+    if (GameController.IsGameOver) return;
 
     transform.Translate(Vector3.left * _speed * Time.deltaTime);
   }
