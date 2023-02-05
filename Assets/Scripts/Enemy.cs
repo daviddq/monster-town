@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
   [SerializeField] float _speed = 1.0f;
 
@@ -17,12 +17,16 @@ public class EnemyMovement : MonoBehaviour
     _animator.SetBool("walking", true);
   }
 
-  void Update()
+  private void OnTriggerEnter2D(Collider2D collision)
   {
-    // TODO:
-    //
-    // 1) did I reach the player area? player dies
-    // 2) walk towards player
+    if (collision.gameObject.name == "PlayerArea")
+      SceneController.GameOver = true;
+  }
+
+  private void Update()
+  {
+    if (SceneController.GameOver)
+      return;
 
     transform.Translate(Vector3.left * _speed * Time.deltaTime);
   }
