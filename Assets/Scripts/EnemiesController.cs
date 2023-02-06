@@ -17,8 +17,6 @@ public class EnemiesController : MonoBehaviour
   float _timeToNextSpawn;
   int _nextSpawnPoint = 0;
 
-  List<Enemy> _enemies = new List<Enemy>();
-
   void Awake()
   {
     _timeToNextSpawn = _timeBetweenSpawns;
@@ -40,15 +38,18 @@ public class EnemiesController : MonoBehaviour
   private GameObject InstantiateEnemy()
   {
     GameObject prefab = Resources.Load("Prefabs/Enemy") as GameObject;
-    GameObject enemy = Instantiate(prefab);
+    GameObject go = Instantiate(prefab);
+    Enemy enemy = go.GetComponent<Enemy>();
 
-    _enemies.Add(enemy.GetComponentInChildren<Enemy>());
+    (string operation, int result) = GetMultiplication(5);
+
+    enemy.Initialize(operation, result);
 
     //enemy.transform.SetParent(_canvas.transform, false);
     Transform spawnPoint = GetNextSpawnPoint();
-    enemy.transform.position = spawnPoint.position;
+    go.transform.position = spawnPoint.position;
 
-    return enemy;
+    return go;
   }
 
   private Transform GetNextSpawnPoint()
@@ -68,5 +69,13 @@ public class EnemiesController : MonoBehaviour
     }
 
     return _spawnPoints[index];
+  }
+
+  private (string, int) GetMultiplication(int difficulty)
+  {
+    int factor1 = Random.Range(0, difficulty + 1);
+    int factor2 = Random.Range(0, difficulty + 1);
+
+    return (string.Format("{0}x{1}", factor1, factor2), factor1 * factor2);
   }
 }
