@@ -26,6 +26,11 @@ public class OverheadText : MonoBehaviour
     text.text = this._text;
   }
 
+  void OnDestroy()
+  {
+    Destroy(_textObject);
+  }
+
   private void Update()
   {
     _textObject.transform.position = _targetObject.transform.position;
