@@ -41,4 +41,33 @@ public class EventBus : MonoBehaviour
   {
     instance.OnAttack?.Invoke(e);
   }
+
+  public class EnemyKilledEventArgs
+  {
+    public Enemy Enemy;
+    public EnemyKilledEventArgs(Enemy enemy)
+    {
+      this.Enemy = enemy;
+    }
+  }
+  public delegate void EnemyKilledEventDelegate(EnemyKilledEventArgs e);
+  public event EnemyKilledEventDelegate OnEnemyKilled;
+  public static void PublishEnemyKilledEvent(EnemyKilledEventArgs e)
+  {
+    instance.OnEnemyKilled?.Invoke(e);
+  }
+
+  public delegate void GameWinEventDelegate();
+  public event GameWinEventDelegate OnGameWin;
+  public static void PublishGameWinEvent()
+  {
+    instance.OnGameWin?.Invoke();
+  }
+
+  public delegate void GameOverEventDelegate();
+  public event GameOverEventDelegate OnGameOver;
+  public static void PublishGameOverEvent()
+  {
+    instance.OnGameOver?.Invoke();
+  }
 }

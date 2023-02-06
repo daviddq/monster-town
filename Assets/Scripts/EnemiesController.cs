@@ -12,38 +12,86 @@ public class EnemiesController : MonoBehaviour
 
   [SerializeField] private Planning _planning = Planning.RoundRobin;
   [SerializeField] private Transform[] _spawnPoints;
-  [SerializeField] private float _timeBetweenSpawns = 3f;
-
-  float _timeToNextSpawn;
+  [SerializeField] private List<WaveScriptableObject> _waves = new List<WaveScriptableObject>();
+  private int _currentWave = -1;
   int _nextSpawnPoint = 0;
+  float _timeToNextSpawn;
+  int _killsToNextWave;
+  PonderatedRandom _factorsGenerator;
 
   void Awake()
   {
-    _timeToNextSpawn = _timeBetweenSpawns;
+    NextWave();
+  }
+
+  void Start()
+  {
+    EventBus.instance.OnEnemyKilled += OnEnemyKilled;
+  }
+
+  void OnDestroy()
+  {
+    EventBus.instance.OnEnemyKilled -= OnEnemyKilled;
+  }
+
+  public bool GameIsFinished { get { return GameController.IsGameFinished || _currentWave >= _waves.Count; } }
+
+  void OnEnemyKilled(EventBus.EnemyKilledEventArgs args)
+  {
+    if (GameIsFinished) return;
+
+    --_killsToNextWave;
+    if (_killsToNextWave <= 0)
+    {
+      NextWave();
+    }
+  }
+
+  void NextWave()
+  {
+    ++_currentWave;
+
+    if (_currentWave >= _waves.Count)
+    {
+      Debug.Log("Game Win");
+
+      EventBus.PublishGameWinEvent();
+      return;
+    }
+
+    Debug.Log($"Current wave: {_currentWave}");
+
+    _timeToNextSpawn = _waves[_currentWave].TimeBetweenSpawns;
+    _killsToNextWave = _waves[_currentWave].WaveEnemyCount;
+    _factorsGenerator = new PonderatedRandom(_waves[_currentWave].PonderatedFactors);
   }
 
   // Update is called once per frame
   void Update()
   {
-    if (GameController.IsGameOver) return;
+    if (GameIsFinished) return;
+
+    if (_currentWave >= _waves.Count) return;
 
     _timeToNextSpawn -= Time.deltaTime;
+
     if (_timeToNextSpawn <= 0)
     {
-      InstantiateEnemy();
-      _timeToNextSpawn = _timeBetweenSpawns;
+      SpawnEnemy();
+      _timeToNextSpawn = _waves[_currentWave].TimeBetweenSpawns;
     }
   }
 
-  private GameObject InstantiateEnemy()
+  private GameObject SpawnEnemy()
   {
-    GameObject prefab = Resources.Load("Prefabs/Enemy") as GameObject;
+    GameObject prefab = Resources.Load("Prefabs/Enemy") as GameObject; // TODO pick from the Wave info
     GameObject go = Instantiate(prefab);
     Enemy enemy = go.GetComponent<Enemy>();
 
-    (string operation, int result) = GetMultiplication(5);
+    float speed = Random.Range(_waves[_currentWave].MinEnemySpeed, _waves[_currentWave].MaxEnemySpeed);
+    (string operation, int result) = GetMultiplication();
 
-    enemy.Initialize(operation, result);
+    enemy.Initialize(speed, operation, result);
 
     //enemy.transform.SetParent(_canvas.transform, false);
     Transform spawnPoint = GetNextSpawnPoint();
@@ -71,10 +119,10 @@ public class EnemiesController : MonoBehaviour
     return _spawnPoints[index];
   }
 
-  private (string, int) GetMultiplication(int difficulty)
+  private (string, int) GetMultiplication()
   {
-    int factor1 = Random.Range(0, difficulty + 1);
-    int factor2 = Random.Range(0, difficulty + 1);
+    int factor1 = _factorsGenerator.GetRandomValue();
+    int factor2 = _factorsGenerator.GetRandomValue();
 
     return (string.Format("{0}x{1}", factor1, factor2), factor1 * factor2);
   }

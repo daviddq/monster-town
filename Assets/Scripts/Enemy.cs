@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-  [SerializeField] float _speed = 1.0f;
-
+  float _speed = 1.0f;
   string _operation = "uninitialized";
   int _result = 0;
 
@@ -28,8 +27,9 @@ public class Enemy : MonoBehaviour
     _overheadText.SetText(this._operation);
   }
 
-  public void Initialize(string operation, int result)
+  public void Initialize(float speed, string operation, int result)
   {
+    this._speed = speed;
     this._operation = operation;
     this._result = result;
   }
@@ -44,10 +44,16 @@ public class Enemy : MonoBehaviour
     EventBus.instance.OnAttack -= OnAttack;
   }
 
-  void OnAttack(EventBus.AttackEventArgs args)
+  void OnAttack(EventBus.AttackEventArgs attackArgs)
   {
-    if (args.Number == this._result)
+    if (GameController.IsGameOver) return;
+
+    if (attackArgs.Number == this._result)
+    {
+      var killArgs = new EventBus.EnemyKilledEventArgs(this);
+      EventBus.PublishEnemyKilledEvent(killArgs);
       Destroy(this.gameObject);
+    }
   }
 
   private void Update()
