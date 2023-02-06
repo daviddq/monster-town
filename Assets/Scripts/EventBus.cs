@@ -12,7 +12,12 @@ public class EventBus : MonoBehaviour
 
   public class PlayerAreaReachedEventArgs
   {
-    public Enemy enemy;
+    public Enemy Enemy;
+
+    public PlayerAreaReachedEventArgs(Enemy enemy)
+    {
+      this.Enemy = enemy;
+    }
   }
   public delegate void PlayerAreaReachedEventDelegate(PlayerAreaReachedEventArgs e);
   public event PlayerAreaReachedEventDelegate OnPlayerAreaReached;

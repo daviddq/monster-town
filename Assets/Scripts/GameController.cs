@@ -8,7 +8,22 @@ public class GameController : MonoBehaviour
     GameOver
   }
 
-  public static GameState State { get; set; } = GameState.Running;
+  public static GameState State { get; private set; } = GameState.Running;
 
   public static bool IsGameOver => State == GameState.GameOver;
+
+  void Start()
+  {
+    EventBus.instance.OnPlayerAreaReached += OnPlayerAreaReached;
+  }
+
+  void OnDestroy()
+  {
+    EventBus.instance.OnPlayerAreaReached -= OnPlayerAreaReached;
+  }
+
+  void OnPlayerAreaReached(EventBus.PlayerAreaReachedEventArgs args)
+  {
+    GameController.State = GameState.GameOver;
+  }
 }

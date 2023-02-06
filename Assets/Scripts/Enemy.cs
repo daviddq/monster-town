@@ -46,13 +46,8 @@ public class Enemy : MonoBehaviour
 
   void OnAttack(EventBus.AttackEventArgs args)
   {
-    Debug.Log(args.Number);
-  }
-
-  private void OnTriggerEnter2D(Collider2D collision)
-  {
-    if (collision.gameObject.name == "PlayerArea")
-      GameController.State = GameController.GameState.GameOver;
+    if (args.Number == this._result)
+      Destroy(this.gameObject);
   }
 
   private void Update()
