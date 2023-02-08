@@ -17,16 +17,14 @@ public class EnemiesController : MonoBehaviour
   int _nextSpawnPoint = 0;
   float _timeToNextSpawn;
   int _killsToNextWave;
-  PonderatedRandom _factorsGenerator;
-
-  void Awake()
-  {
-    NextWave();
-  }
+  PonderatedRandom _factor1Generator;
+  PonderatedRandom _factor2Generator;
 
   void Start()
   {
     EventBus.instance.OnEnemyKilled += OnEnemyKilled;
+
+    NextWave();
   }
 
   void OnDestroy()
@@ -36,7 +34,7 @@ public class EnemiesController : MonoBehaviour
 
   public bool GameIsFinished { get { return GameController.IsGameFinished || _currentWave >= _waves.Count; } }
 
-  void OnEnemyKilled(EventBus.EnemyKilledEventArgs args)
+  void OnEnemyKilled(Enemy enemy)
   {
     if (GameIsFinished) return;
 
@@ -59,11 +57,13 @@ public class EnemiesController : MonoBehaviour
       return;
     }
 
-    Debug.Log($"Current wave: {_currentWave}");
-
     _timeToNextSpawn = _waves[_currentWave].TimeBetweenSpawns;
     _killsToNextWave = _waves[_currentWave].WaveEnemyCount;
-    _factorsGenerator = new PonderatedRandom(_waves[_currentWave].PonderatedFactors);
+
+    _factor1Generator = new PonderatedRandom(_waves[_currentWave].PonderatedFactors1);
+    _factor2Generator = new PonderatedRandom(_waves[_currentWave].PonderatedFactors2);
+
+    EventBus.PublishNextWaveEvent(_currentWave);
   }
 
   // Update is called once per frame
@@ -84,7 +84,7 @@ public class EnemiesController : MonoBehaviour
 
   private GameObject SpawnEnemy()
   {
-    GameObject prefab = Resources.Load("Prefabs/Enemy") as GameObject; // TODO pick from the Wave info
+    GameObject prefab = Resources.Load("Prefabs/Enemy") as GameObject; // TODO: make it variable
     GameObject go = Instantiate(prefab);
     Enemy enemy = go.GetComponent<Enemy>();
 
@@ -121,8 +121,8 @@ public class EnemiesController : MonoBehaviour
 
   private (string, int) GetMultiplication()
   {
-    int factor1 = _factorsGenerator.GetRandomValue();
-    int factor2 = _factorsGenerator.GetRandomValue();
+    int factor1 = _factor1Generator.GetRandomValue();
+    int factor2 = _factor2Generator.GetRandomValue();
 
     return (string.Format("{0}x{1}", factor1, factor2), factor1 * factor2);
   }

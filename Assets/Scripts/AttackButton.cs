@@ -9,7 +9,6 @@ public class AttackButton : MonoBehaviour
 
   public void OnAttackClick()
   {
-    var args = new EventBus.AttackEventArgs(int.Parse(_field.text));
-    EventBus.PublishAttackEvent(args);
+    EventBus.PublishAttackEvent(int.Parse(_field.text));
   }
 }

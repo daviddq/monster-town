@@ -12,7 +12,6 @@ public class WaveScriptableObject : ScriptableObject
   public float MaxEnemySpeed = 1f;
   public float TimeBetweenSpawns = 3f;
 
-  public List<PonderatedValue> PonderatedFactors = new List<PonderatedValue>();
-
-  public List<GameObject> EnemiesPrefabs = new List<GameObject>();
+  public List<PonderatedValue> PonderatedFactors1 = new List<PonderatedValue>();
+  public List<PonderatedValue> PonderatedFactors2 = new List<PonderatedValue>();
 }

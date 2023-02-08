@@ -44,14 +44,13 @@ public class Enemy : MonoBehaviour
     EventBus.instance.OnAttack -= OnAttack;
   }
 
-  void OnAttack(EventBus.AttackEventArgs attackArgs)
+  void OnAttack(int number)
   {
     if (GameController.IsGameOver) return;
 
-    if (attackArgs.Number == this._result)
+    if (number == this._result)
     {
-      var killArgs = new EventBus.EnemyKilledEventArgs(this);
-      EventBus.PublishEnemyKilledEvent(killArgs);
+      EventBus.PublishEnemyKilledEvent(this);
       Destroy(this.gameObject);
     }
   }

@@ -9,7 +9,6 @@ public class PlayerArea : MonoBehaviour
     Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
     if (!enemy) return;
 
-    var args = new EventBus.PlayerAreaReachedEventArgs(enemy);
-    EventBus.PublishPlayerAreaReachedEvent(args);
+    EventBus.PublishEnemyReachedPlayerEvent(enemy);
   }
 }

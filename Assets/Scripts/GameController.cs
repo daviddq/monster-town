@@ -17,19 +17,19 @@ public class GameController : MonoBehaviour
 
   void Start()
   {
-    EventBus.instance.OnPlayerAreaReached += OnPlayerAreaReached;
+    EventBus.instance.OnEnemyReachedPlayer += OnPlayerAreaReached;
     EventBus.instance.OnGameWin += OnGameWin;
     EventBus.instance.OnGameOver += OnGameOver;
   }
 
   void OnDestroy()
   {
-    EventBus.instance.OnPlayerAreaReached -= OnPlayerAreaReached;
+    EventBus.instance.OnEnemyReachedPlayer -= OnPlayerAreaReached;
     EventBus.instance.OnGameWin -= OnGameWin;
     EventBus.instance.OnGameOver -= OnGameOver;
   }
 
-  void OnPlayerAreaReached(EventBus.PlayerAreaReachedEventArgs args)
+  void OnPlayerAreaReached(Enemy enemy)
   {
     GameController.State = GameState.GameOver;
   }

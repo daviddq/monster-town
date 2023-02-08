@@ -10,51 +10,25 @@ public class EventBus : MonoBehaviour
     instance = this;
   }
 
-  public class PlayerAreaReachedEventArgs
+  public delegate void EnemyReachedPlayerEventDelegate(Enemy enemy);
+  public event EnemyReachedPlayerEventDelegate OnEnemyReachedPlayer;
+  public static void PublishEnemyReachedPlayerEvent(Enemy enemy)
   {
-    public Enemy Enemy;
-
-    public PlayerAreaReachedEventArgs(Enemy enemy)
-    {
-      this.Enemy = enemy;
-    }
-  }
-  public delegate void PlayerAreaReachedEventDelegate(PlayerAreaReachedEventArgs e);
-  public event PlayerAreaReachedEventDelegate OnPlayerAreaReached;
-  public static void PublishPlayerAreaReachedEvent(PlayerAreaReachedEventArgs e)
-  {
-    instance.OnPlayerAreaReached?.Invoke(e);
+    instance.OnEnemyReachedPlayer?.Invoke(enemy);
   }
 
-
-  public class AttackEventArgs
-  {
-    public int Number;
-    public AttackEventArgs(int number)
-    {
-      this.Number = number;
-    }
-  }
-  public delegate void AttackEventDelegate(AttackEventArgs e);
+  public delegate void AttackEventDelegate(int number);
   public event AttackEventDelegate OnAttack;
-  public static void PublishAttackEvent(AttackEventArgs e)
+  public static void PublishAttackEvent(int number)
   {
-    instance.OnAttack?.Invoke(e);
+    instance.OnAttack?.Invoke(number);
   }
 
-  public class EnemyKilledEventArgs
-  {
-    public Enemy Enemy;
-    public EnemyKilledEventArgs(Enemy enemy)
-    {
-      this.Enemy = enemy;
-    }
-  }
-  public delegate void EnemyKilledEventDelegate(EnemyKilledEventArgs e);
+  public delegate void EnemyKilledEventDelegate(Enemy enemy);
   public event EnemyKilledEventDelegate OnEnemyKilled;
-  public static void PublishEnemyKilledEvent(EnemyKilledEventArgs e)
+  public static void PublishEnemyKilledEvent(Enemy enemy)
   {
-    instance.OnEnemyKilled?.Invoke(e);
+    instance.OnEnemyKilled?.Invoke(enemy);
   }
 
   public delegate void GameWinEventDelegate();
@@ -69,5 +43,12 @@ public class EventBus : MonoBehaviour
   public static void PublishGameOverEvent()
   {
     instance.OnGameOver?.Invoke();
+  }
+
+  public delegate void NewWaveEventDelegate(int wave);
+  public event NewWaveEventDelegate OnNewWave;
+  public static void PublishNextWaveEvent(int wave)
+  {
+    instance.OnNewWave?.Invoke(wave);
   }
 }
