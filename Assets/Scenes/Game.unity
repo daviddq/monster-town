@@ -272,6 +272,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &586336704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 586336705}
+  - component: {fileID: 586336706}
+  m_Layer: 5
+  m_Name: Attacks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &586336705
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586336704}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1701293956}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -703, y: 430.89}
+  m_SizeDelta: {x: 147.74, y: 171.33}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &586336706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586336704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fdea5adfdf4d454eb6588102b745f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackPrefab: {fileID: 8337739012894304044, guid: 0e73c343d0fd91443a79080bcd732c44, type: 3}
+  _verticalSpacing: -100
+  _timeBetweenGenerations: 1
 --- !u!1 &646291157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,6 +1455,7 @@ RectTransform:
   m_Children:
   - {fileID: 2110961876}
   - {fileID: 1735221181}
+  - {fileID: 586336705}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1701,7 +1753,7 @@ GameObject:
   - component: {fileID: 2110961878}
   - component: {fileID: 2110961877}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: OldAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1725,7 +1777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -38.340027, y: -300.88}
+  m_AnchoredPosition: {x: -38.340088, y: -300.88}
   m_SizeDelta: {x: -1445.85, y: -762.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2110961877
